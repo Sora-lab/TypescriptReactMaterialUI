@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { fetchProfile, fetchNarratives} from '../utils/fetch';
+import Button from '@material-ui/core/Button';
+import ProfileTabs from '../components/ProfileTabs';
 
 interface narrativeData {
     wsID: string; name: string; last_saved: string;
@@ -81,7 +83,9 @@ class Home extends Component<any, State> {
     
     render(){
         return(
-            <p> home page!</p>
+            <ProfileTabs data={this.state}/>
         )
     }
 }
+
+export default Home;
