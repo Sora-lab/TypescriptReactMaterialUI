@@ -1,15 +1,24 @@
 import React from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faStroopwafel, faUser, faSearch, faIdCard, faFileCode, faUsers } from '@fortawesome/free-solid-svg-icons'
-import Home from './pages/home'
+import { faUser, faSearch, faIdCard, faFileCode, faUsers, faHome, faTachometerAlt, faList } from '@fortawesome/free-solid-svg-icons'
+import AppBar from '@material-ui/core/AppBar'
+import './App.css';
+import Home from './pages/home';
+import NavDrawer from './components/Drawer'
 
-library.add(faUser, faSearch, faIdCard, faFileCode, faUsers)
+library.add(faUser, faSearch, faIdCard, faFileCode, faUsers, faHome, faTachometerAlt, faList, faSearch)
+
+
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <Home />
-    </div>
+      <div id="app">
+      <AppBar position="relative">hello I really wonder if I ever figure out this thing to position correctly so that i don't have to use chossy way to make this work.</AppBar>
+        <NavDrawer />
+        <div style={{marginLeft: 240}}>
+        <Home />
+        </div>
+       </div> 
   );
 }
 

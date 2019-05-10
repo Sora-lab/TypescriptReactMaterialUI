@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { fetchProfile, fetchNarratives} from '../utils/fetch';
-import Button from '@material-ui/core/Button';
 import ProfileTabs from '../components/ProfileTabs';
 
 interface narrativeData {
@@ -31,7 +30,7 @@ class Home extends Component<any, State> {
     constructor(props: any){
         super(props);
         this.state = {
-            tabTitle: ['Profile', 'Narratives', 'Collaborator Network', 'Search other users'],
+            tabTitle: ['Profile', 'Narratives', 'Collaborator Network', 'Search users'],
             userName: {
                 name: '',
                 userID: '',
@@ -57,7 +56,7 @@ class Home extends Component<any, State> {
         .then((response:{version: string, result:Array<any>})=>{
             let res = response.result[0][0];
             this.setState({
-                tabTitle: [res['user']['realname'],'Narratives', 'Collaborator Network', 'Search other users'],
+               // tabTitle: [res['user']['realname'],'Narratives', 'Collaborator Network', 'Search other users'],
                 userName: {
                     name: res['user']['realname'],
                     userID: res['user']['username']
