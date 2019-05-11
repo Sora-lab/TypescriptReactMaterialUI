@@ -1,8 +1,6 @@
 import React from "react";
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import EditIcon from '@material-ui/icons/Edit'
-import SaveIcon from '@material-ui/icons/Save'
 import Paper from '@material-ui/core/Paper';
 
 interface Props {
@@ -23,6 +21,7 @@ interface Props {
         jobTitleOther: string;
         researchInterests: Array<any>;
     };
+    orgs: Array<any>;
 }
 
 const Profile = (props: Props) => {
@@ -30,12 +29,20 @@ const Profile = (props: Props) => {
 
     let affiliations = [];
     let researchInterests = [];
-    if (profile.affiliations[0]) {
+    let orgs = [];
+    if (profile.affiliations) {
         affiliations = profile.affiliations;
-        console.log("how afflications look now?", affiliations)
+    } else {
+        affiliations = [{'title': '', 'organization': '', 'started': '', 'ended': ''}]
     }
     if (profile.researchInterests) {
         researchInterests = profile.researchInterests
+    } else {
+        console.log("this shouldn't happen.");
+    } 
+    if (props.orgs){
+        console.log("props.orgs", props.orgs)
+        orgs = props.orgs;
     }
     const click = () => {
         console.log("hello")
@@ -46,7 +53,7 @@ const Profile = (props: Props) => {
     return (
         <Grid container justify="flex-start" direction="row">
             <Grid alignContent="flex-start" alignItems="flex-start" 
-                    id="main-user-info" container direction="row" xs={3}>
+                    id="main-user-info" item direction="row" xs={3}>
                 <Paper className="margin-8px padding-8px">
                     <Grid container direction="row">
                         <Grid item xs={12}>
@@ -56,7 +63,7 @@ const Profile = (props: Props) => {
                                 className="dispaly-block margin-8px"
                                 fullWidth multiline
                                 defaultValue={props.userName.name}
-                                helperText={helperTexttext} InputProps={{ readOnly: true, disabled: false, }}
+                                helperText={helperTexttext} InputProps={{ readOnly: false, disabled: false, }}
                                 value={props.userName.name}
                             />
                             <TextField
@@ -65,7 +72,7 @@ const Profile = (props: Props) => {
                                 fullWidth multiline
                                 defaultValue="Job title"
                                 helperText={helperTexttext}
-                                InputProps={{ readOnly: true, disabled: false, }}
+                                InputProps={{ readOnly: false, disabled: false, }}
                                 value={props.userProfile.jobTitleOther}
                             />
                             <TextField
@@ -74,7 +81,7 @@ const Profile = (props: Props) => {
                                 fullWidth multiline
                                 defaultValue="Oragnization"
                                 helperText={helperTexttext}
-                                InputProps={{ readOnly: true, disabled: false, }}
+                                InputProps={{ readOnly: false, disabled: false, }}
                                 value={props.userProfile.organization}
                             />
                             <TextField
@@ -83,12 +90,10 @@ const Profile = (props: Props) => {
                                 fullWidth multiline
                                 defaultValue="Department"
                                 helperText={helperTexttext}
-                                InputProps={{ readOnly: true, disabled: false, }}
+                                InputProps={{ readOnly: false, disabled: false, }}
                                 value={props.userProfile.department}
                             />
                         </Grid>
-                        <EditIcon onClick={click} />
-                        <SaveIcon onClick={click} />
                     </Grid>
                 </Paper>
                 <Paper className="margin-8px padding-8px">
@@ -144,17 +149,17 @@ const Profile = (props: Props) => {
                 <Grid item xs={8}>
                     <Paper className="padding-8px margin-8px">
                         <p>Associated Organizations</p><ul>
-                            {researchInterests.map(interest => (
-                                <li>{interest}</li>
+                            {orgs.map(org => (
+                                <a href={org.url}><li>{org.name}</li></a>
                             ))}
                         </ul>
                     </Paper>
                 </Grid>
-                <Grid>
+                <Grid xs={12}>
                     <Paper className="padding-8px margin-8px">
                         <p>Research or personal statement</p>{profile.researchStatement}
                     </Paper>
-                    <Paper className="padding-8px margin-8px width-100">
+                    <Paper className="padding-8px margin-8px">
                         <p>Past positions</p>
                         {affiliations.map(position => (
                             <div className="past-positions">

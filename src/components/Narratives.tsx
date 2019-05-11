@@ -19,8 +19,14 @@ interface Props {
 
 const Narratives = (props:Props)=>{
     console.log("Narrative", props)
-    let data = props.narratives
-
+    // Since there is no state to initialize the variables within the function,
+    // you must initiate it with empty array, and set the data with props when props are avaiable. 
+    // otherwise initial rendering will fail with undefined object to map().
+    let data:Array<narrativeData>=[];
+    if(props.narratives){
+        data = props.narratives;
+    }
+    const url = (wsid:string)=> "https://ci.kbase.us/narrative/" + wsid;
     const columns = ["Title", "Created", "Last saved"];
     
     {/* <pre>{ JSON.stringify(props.narratives) }</pre> */}
@@ -29,7 +35,7 @@ const Narratives = (props:Props)=>{
         <Table>
             <TableHead>
                 <TableRow>
-                    {columns.map(item => (
+                    {columns.map((item) => (
                         <TableCell
                             key={item}
                             sortDirection="asc"
@@ -45,9 +51,9 @@ const Narratives = (props:Props)=>{
                 </TableRow>
             </TableHead>
             <TableBody>
-                {data.map( narrative =>(
+                {data.map( (narrative) =>(
                     <TableRow id={narrative.wsID}>
-                        <TableCell>{narrative.name}</TableCell>
+                        <TableCell><a target="blank" href={url(narrative.wsID)}>{narrative.name}</a></TableCell>
                         <TableCell>{narrative.last_saved}</TableCell>
                         <TableCell>{narrative.last_saved}</TableCell>
                     </TableRow>

@@ -10,7 +10,9 @@ import SearchUsers from './SearchUsers';
 interface narrativeData {
     wsID: string; name: string; last_saved: string;
 }
-
+interface org {
+    name: string; url: string;
+}
 interface Props {
     data: {
         tabTitle: Array<string>;
@@ -32,6 +34,7 @@ interface Props {
             researchInterests: Array<any>;
         };
         narratives: Array<narrativeData>;
+        organizations: Array<org>;
     }
 }
 interface State {
@@ -47,7 +50,6 @@ class ProfileTabs extends React.Component <Props, State> {
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange = (event:any, value:number)=>{
-        console.log(value)
         this.setState({activeTab: value})
     }
     render(){
@@ -64,7 +66,7 @@ class ProfileTabs extends React.Component <Props, State> {
                     {/* <Narratives narratives={data.narratives}/> */}
                 </Tabs>
                 <div className="container padding-8px">
-                    { this.state.activeTab === 0 && <Profile userName={data.userName} userProfile={data.userProfile} />}
+                    { this.state.activeTab === 0 && <Profile userName={data.userName} userProfile={data.userProfile} orgs={data.organizations}  />}
                     { this.state.activeTab === 1 && <Narratives narratives={data.narratives}/>}
                     { this.state.activeTab === 3 && <SearchUsers />}
                     { this.state.activeTab === 4 && <CardProfile userName={data.userName} userProfile={data.userProfile} />}

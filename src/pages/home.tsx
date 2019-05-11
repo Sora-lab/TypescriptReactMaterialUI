@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-import { fetchProfile, fetchNarratives} from '../utils/fetch';
+import { fetchProfile, fetchNarratives, fetchOrgsOfUser } from '../utils/fetch';
 import ProfileTabs from '../components/ProfileTabs';
 
 interface narrativeData {
     wsID: string; name: string; last_saved: string;
+}
+interface org {
+    name: string; url: string;
 }
 interface State {
     tabTitle: Array<string>;
@@ -25,7 +28,9 @@ interface State {
         researchInterests: Array<any>;
     };
     narratives: Array<narrativeData>;
+    organizations: Array<org>;
 }
+
 class Home extends Component<any, State> {
     constructor(props: any){
         super(props);
@@ -48,12 +53,16 @@ class Home extends Component<any, State> {
                 jobTitleOther: '',
                 researchInterests: [],
             },
-            narratives: []
+            narratives: [],
+            organizations: [],
         }
     }
     componentDidMount(){
-        fetchProfile()
+        console.log("id", window.location.search.replace('?', ''))
+        const userID = window.location.search.replace('?', '');
+        fetchProfile(userID)
         .then((response:{version: string, result:Array<any>})=>{
+            console.log('fetchProfile', response)
             let res = response.result[0][0];
             this.setState({
                // tabTitle: [res['user']['realname'],'Narratives', 'Collaborator Network', 'Search other users'],
@@ -64,11 +73,18 @@ class Home extends Component<any, State> {
                 userProfile: response.result[0][0]['profile']['userdata'],
             })
         });
-        fetchNarratives()
+        fetchNarratives(userID)
         .then((response:Array<any>)=>{
-            console.log('fetchNarratives', response)
+            console.log('fetchNarratives Response', response)
             this.setState(
                 {narratives: response}
+            )
+        })
+        fetchOrgsOfUser(userID)
+        .then((response:Array<org>)=>{
+            console.log('fetchOrgsOfUser', response)
+            this.setState(
+                {organizations: response}
             )
         })
     }

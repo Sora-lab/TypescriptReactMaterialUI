@@ -19,7 +19,7 @@ const NavDrawer = () => {
             <List>
                 <ListItem button key="dashboard">
                     <ListItemIcon><DashboardIcon className="font32px"/></ListItemIcon>
-                    <ListItemText primary="Dashboard"/>
+                    <ListItemText primary="Dashboard" secondary="this icon is bigger"/>
                 </ListItem>
                 <ListItem button key="organization">
                     <ListItemIcon><GroupIcon /></ListItemIcon>
