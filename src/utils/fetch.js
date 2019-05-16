@@ -1,6 +1,9 @@
 const token = '5AM5QHKCXTK7YJCPB3DADVU34BFHVH3Q'
 
-// Fetch a user profile
+/**
+ * fetch profile from ID 
+ * @param {string} id  profile ID
+ */
 export const fetchProfile = (id)=>{
     console.log("fetch id", id)
     return fetch('http://localhost:5000/fetchUserProfile/'+id, {
@@ -8,21 +11,27 @@ export const fetchProfile = (id)=>{
         json: true
     })
     .then((response) => response.json())
+    //.then((response) => {console.log(response.toString())})
     .catch(console.error())
 }
-// Fetch Narratives that are associated with a user
-export const fetchNarratives = () => {
-    return fetch('http://localhost:5000/narrative_list/', {
+
+/** 
+ * Fetch Narratives
+ * @param {string} param 
+ * @param {string} token 
+ *  */
+export const fetchNarratives = (param, token) => {
+    return fetch('http://localhost:5000/narrative_list/'+param+'/'+token, {
         method: 'GET',
         json: true
     })
     .then((response) => response.json())
-    // .then((response) => console.log("fetchNarratives", response))
+    //.then((response) => console.log("fetchNarratives", response))
     .catch(console.error())
 }
 
 // These are not using python. 
-// Why? I already made this once and I'm too lazy to make python version right now.
+// Why? I already made this once and I'm too lazy to make python version for now.
 // TODO: AKIYO - Bring this to BEFFE
 // Fetch organizations that a user is associated with
 export const fetchOrgsOfUser = (id)=>{

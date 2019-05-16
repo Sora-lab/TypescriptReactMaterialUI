@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { fetchProfile, fetchNarratives, fetchOrgsOfUser } from '../utils/fetch';
 import ProfileTabs from '../components/ProfileTabs';
+import NarrativeList from './NarrativeList';
 
 interface narrativeData {
     wsID: string; name: string; last_saved: string;
@@ -73,13 +74,7 @@ class Home extends Component<any, State> {
                 userProfile: response.result[0][0]['profile']['userdata'],
             })
         });
-        fetchNarratives(userID)
-        .then((response:Array<any>)=>{
-            console.log('fetchNarratives Response', response)
-            this.setState(
-                {narratives: response}
-            )
-        })
+
         fetchOrgsOfUser(userID)
         .then((response:Array<org>)=>{
             console.log('fetchOrgsOfUser', response)
@@ -98,7 +93,10 @@ class Home extends Component<any, State> {
     
     render(){
         return(
-            <ProfileTabs data={this.state}/>
+            <div>
+                <NarrativeList />
+                <ProfileTabs data={this.state}/>
+            </div>
         )
     }
 }

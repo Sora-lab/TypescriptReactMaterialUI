@@ -7,8 +7,6 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableBody from '@material-ui/core/TableBody';
 import Paper from '@material-ui/core/Paper';
 
-
-
 interface narrativeData {
     wsID: string; name: string; last_saved: string;
 }
@@ -16,51 +14,60 @@ interface narrativeData {
 interface Props {
     narratives: Array<narrativeData>
 }
+ 
 
-const Narratives = (props:Props)=>{
-    console.log("Narrative", props)
-    // Since there is no state to initialize the variables within the function,
-    // you must initiate it with empty array, and set the data with props when props are avaiable. 
-    // otherwise initial rendering will fail with undefined object to map().
-    let data:Array<narrativeData>=[];
-    if(props.narratives){
-        data = props.narratives;
-    }
-    const url = (wsid:string)=> "https://ci.kbase.us/narrative/" + wsid;
-    const columns = ["Title", "Created", "Last saved"];
+class Narratives extends React.Component<Props, State>{
+
+    constructor(props:Props){
+        super(props);
+        this.state = {
+            narratives: [],
+            columns: ["Title", "Created", "Last saved"],
+        }
+    };
+
+
+    // make url from work space ID
+    url = (wsid:string)=> "https://ci.kbase.us/narrative/" + wsid;
+
+    columns = ["Title", "Created", "Last saved"];
     
-    {/* <pre>{ JSON.stringify(props.narratives) }</pre> */}
-    return (
-        <Paper>
-        <Table>
-            <TableHead>
-                <TableRow>
-                    {columns.map((item) => (
-                        <TableCell
-                            key={item}
-                            sortDirection="asc"
-                        >
-                            <TableSortLabel
-                                active={true}
-                                direction="asc"
+   // /* <pre>{ JSON.stringify(props.narratives) }</pre> */
+    
+    render(){
+        return (
+            <Paper>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        {this.columns.map((item) => (
+                            <TableCell
+                                key={item}
+                                sortDirection="asc"
                             >
-                            {item}
-                            </TableSortLabel>
-                        </TableCell>
-                    ))}
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {data.map( (narrative) =>(
-                    <TableRow id={narrative.wsID}>
-                        <TableCell><a target="blank" href={url(narrative.wsID)}>{narrative.name}</a></TableCell>
-                        <TableCell>{narrative.last_saved}</TableCell>
-                        <TableCell>{narrative.last_saved}</TableCell>
+                                <TableSortLabel
+                                    active={true}
+                                    direction="asc"
+                                >
+                                {item}
+                                </TableSortLabel>
+                            </TableCell>
+                        ))}
                     </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-        </Paper>
-    )
+                </TableHead>
+                <TableBody>
+                    {this.state.narratives.map( (narrative) =>(
+                        <TableRow id={narrative.wsID}>
+                            <TableCell><a target="blank" href={this.url(narrative.wsID)}>{narrative.name}</a></TableCell>
+                            <TableCell>{narrative.last_saved}</TableCell>
+                            <TableCell>{narrative.last_saved}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+            </Paper>
+        )
+    }
+    
 }
 export default Narratives;
