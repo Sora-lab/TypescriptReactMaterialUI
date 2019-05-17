@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchNarratives } from '../utils/fetch';
+import { fetchNarratives } from './fetch';
 
 interface State {
     publicNarratives:  Array<object>;
@@ -21,15 +21,16 @@ class NarrativeList extends Component<any, State>{
             sharedNarrativesFetchedTime: 1557970001257,
             myNarratives: [],
             myNarrativesFetchedTime: 1557970001257,
-            token: '5AM5QHKCXTK7YJCPB3DADVU34BFHVH3Q'
+            token: 'WOBB7QB7YW7V6ZHXPH3CJVDX2Y3XZA5O'
         }
     };
 
     componentDidMount(){
+        console.log("in NarrativeList componentDidMount")
         // fetch all of the public narratives.
         fetchNarratives('public', this.state.token)
         .then((response:Array<any>)=>{
-            console.log('fetchNarratives Response', response)
+            //console.log('fetchNarratives Response', response)
             this.setState(
                 {publicNarratives: response, publicNarrativesFetchedTime: Date.now()}
             )
@@ -38,7 +39,7 @@ class NarrativeList extends Component<any, State>{
         // fetch all of the shared narratives for the user.
         fetchNarratives('shared', this.state.token)
         .then((response:Array<any>)=>{
-            console.log('fetchNarratives Response', response)
+            //console.log('fetchNarratives Response', response)
             this.setState(
                 {publicNarratives: response, sharedNarrativesFetchedTime: Date.now()}
             )
@@ -46,7 +47,7 @@ class NarrativeList extends Component<any, State>{
         // fetch user's narratives.
         fetchNarratives('mine', this.state.token)
         .then((response:Array<any>)=>{
-            console.log('fetchNarratives Response', response)
+            //console.log('fetchNarratives Response', response)
             this.setState(
                 {publicNarratives: response, myNarrativesFetchedTime: Date.now()}
             )

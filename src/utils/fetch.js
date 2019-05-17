@@ -1,4 +1,4 @@
-const token = '5AM5QHKCXTK7YJCPB3DADVU34BFHVH3Q'
+const token = 'WOBB7QB7YW7V6ZHXPH3CJVDX2Y3XZA5O'
 
 /**
  * fetch profile from ID 
@@ -21,6 +21,7 @@ export const fetchProfile = (id)=>{
  * @param {string} token 
  *  */
 export const fetchNarratives = (param, token) => {
+    console.log("fetchNarratives para,", param)
     return fetch('http://localhost:5000/narrative_list/'+param+'/'+token, {
         method: 'GET',
         json: true
@@ -102,4 +103,23 @@ const fetchOrgs = (id) => {
         return userGroups;
     })
     .catch((error) => console.error('Error while fetching groups associated with the user:', error));
+}
+
+export const fetchLoggedInUser = () => {
+    const cookies = window.document.cookie;
+    const cookie  = cookies.slice(cookies.search('kbase_session'));
+    const currentToken = cookie.slice(cookie.search('=')+1, cookie.search(';'));
+    console.log('Token', currentToken)
+    const authMeUrl = "https://ci.kbase.us/services/auth/me";
+    return fetch(authMeUrl, {
+        method: 'GET',
+        mode: 'cors',
+        json: true,
+        headers: {
+            Authorization: 'WOBB7QB7YW7V6ZHXPH3CJVDX2Y3XZA5O',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => response.json())
+    .then((response)=>{console.log("headers", response.user)})
 }

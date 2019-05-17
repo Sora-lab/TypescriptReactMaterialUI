@@ -67,7 +67,7 @@ class ProfileTabs extends React.Component <Props, State> {
                 </Tabs>
                 <div className="container padding-8px">
                     { this.state.activeTab === 0 && <Profile userName={data.userName} userProfile={data.userProfile} orgs={data.organizations}  />}
-                    { this.state.activeTab === 1 && <Narratives narratives={data.narratives}/>}
+                    { this.state.activeTab === 1 && <SearchUsers />}
                     { this.state.activeTab === 3 && <SearchUsers />}
                     { this.state.activeTab === 4 && <CardProfile userName={data.userName} userProfile={data.userProfile} />}
                 </div>

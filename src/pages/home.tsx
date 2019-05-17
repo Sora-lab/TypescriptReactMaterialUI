@@ -1,14 +1,18 @@
 import React, { Component } from "react";
-import { fetchProfile, fetchNarratives, fetchOrgsOfUser } from '../utils/fetch';
+import { fetchProfile, fetchOrgsOfUser, fetchLoggedInUser } from '../utils/fetch';
 import ProfileTabs from '../components/ProfileTabs';
-import NarrativeList from './NarrativeList';
 
 interface narrativeData {
-    wsID: string; name: string; last_saved: string;
+    wsID: string; 
+    name: string; 
+    last_saved: string;
+    narrative_detail: object;
 }
+
 interface org {
     name: string; url: string;
 }
+
 interface State {
     tabTitle: Array<string>;
     userName: {
@@ -30,7 +34,7 @@ interface State {
     };
     narratives: Array<narrativeData>;
     organizations: Array<org>;
-}
+};
 
 class Home extends Component<any, State> {
     constructor(props: any){
@@ -66,7 +70,6 @@ class Home extends Component<any, State> {
             console.log('fetchProfile', response)
             let res = response.result[0][0];
             this.setState({
-               // tabTitle: [res['user']['realname'],'Narratives', 'Collaborator Network', 'Search other users'],
                 userName: {
                     name: res['user']['realname'],
                     userID: res['user']['username']
@@ -82,6 +85,8 @@ class Home extends Component<any, State> {
                 {organizations: response}
             )
         })
+
+        fetchLoggedInUser();
     }
 
     componentDidUpdate(prevProps:any, prevState:any){
@@ -94,7 +99,6 @@ class Home extends Component<any, State> {
     render(){
         return(
             <div>
-                <NarrativeList />
                 <ProfileTabs data={this.state}/>
             </div>
         )
